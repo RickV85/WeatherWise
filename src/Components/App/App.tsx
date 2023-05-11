@@ -13,6 +13,7 @@ function App() {
   const [forecastUrl, setForecastUrl] = useState("")
   const [forecastData, setForecastData] = useState<ForecastData>()
   const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   const locationFetchSuccess = (position: GeolocationPosition) => {
     console.log(position)
@@ -26,17 +27,21 @@ function App() {
   };
 
   useEffect(() => {
+    setIsLoading(true)
     navigator.geolocation.getCurrentPosition(locationFetchSuccess, locationFetchFailure);
   }, [])
 
   useEffect(() => {
     if (currentGPSCoords) {
+      setIsLoading(true)
       fetchWeatherCurrentLocation(currentGPSCoords.latitude, currentGPSCoords.longitude)
       .then(result => {
         setForecastUrl(result.properties.forecast)
       })
       .catch(error => {
         console.error(error)
+        setError(error)
+        setIsLoading(false)
         alert('There was an error fetching weather')
       }) 
     }
@@ -44,23 +49,40 @@ function App() {
 
   useEffect(() => {
     if (forecastUrl) {
+      setIsLoading(true)
       fetchForecast(forecastUrl)
       .then(result => {
         setForecastData(result)
+        setIsLoading(false)
       })
       .catch(error => {
         console.error(error)
+        setError(error)
+        setIsLoading(false)
         alert('There was an error fetching forecast')
       }) 
     }
   }, [forecastUrl])
 
+  const createDetailedForecast = () => {
+    const forecast = forecastData?.properties.periods.map((day, i) => {
+      return (
+        <article key={i} className='detailed-day-forecast'>
+          <h2>{day.name}</h2>
+          <p>{day.detailedForecast}</p>
+        </article>
+      );
+    })
+    return forecast;
+  }
+
   return (
     <main className='app-main'>
       <h1>Weather Wise</h1>
-      <p>{forecastData?.properties.periods.map((day) => {
-        return day.detailedForecast;
-      })}</p>
+      {isLoading ? <p>Please wait while we load weather data for your location</p> : null}
+      <div className='detailed-forecast'>
+        {createDetailedForecast()}
+      </div>
     </main>
   )
 }
