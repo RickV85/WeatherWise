@@ -78,8 +78,10 @@ function App() {
 
   return (
     <main className='app-main'>
-      <h1>Weather Wise</h1>
+      <h1>WeatherWise</h1>
+      {error ? <p>{error}</p> : null}
       {isLoading ? <p>Please wait while we load weather data for your location</p> : null}
+      {currentGPSCoords ? <p>{` Forecast for your current location: ${currentGPSCoords.latitude}, ${currentGPSCoords.longitude}`}</p> : <p>Fetching your location</p>}
       <div className='detailed-forecast'>
         {createDetailedForecast()}
       </div>
