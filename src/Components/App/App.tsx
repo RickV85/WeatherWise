@@ -2,18 +2,15 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import {
   fetchForecast,
+  fetchWeatherSelectedLocation,
   fetchWeatherCurrentLocation,
 } from "../../Util/APICalls";
-import { ForecastData } from "../../Interfaces/AppInt";
+import { Coords, ForecastData } from "../../Interfaces/AppInt";
 import LocationSelect from "../LocationSelect/LocationSelect";
-
-interface Coords {
-  latitude: string;
-  longitude: string;
-}
 
 function App() {
   const [currentGPSCoords, setCurrentGPSCoords] = useState<Coords>();
+  const [selectedLocCoords, setSelectedLocCoords] = useState<string>();
   const [forecastUrl, setForecastUrl] = useState("");
   const [forecastData, setForecastData] = useState<ForecastData>();
   const [error, setError] = useState("");
@@ -67,6 +64,24 @@ function App() {
   }, [currentGPSCoords]);
 
   useEffect(() => {
+    if (selectedLocCoords) {
+      setIsLoading(true);
+      fetchWeatherSelectedLocation(
+        selectedLocCoords
+      )
+        .then((result) => {
+          setForecastUrl(result.properties.forecast);
+        })
+        .catch((error) => {
+          console.error(error);
+          setError(error);
+          setIsLoading(false);
+          alert("There was an error fetching weather");
+        });
+    }
+  }, [selectedLocCoords])
+
+  useEffect(() => {
     if (forecastUrl) {
       setIsLoading(true);
       fetchForecast(forecastUrl)
@@ -100,7 +115,7 @@ function App() {
       <h1>WeatherWise</h1>
       <section className="header-section">
         {currentGPSCoords ? (
-          <h2>{` Forecast for your current location: ${currentGPSCoords.latitude}, ${currentGPSCoords.longitude}`}</h2>
+          <h2>{` Your current location: ${currentGPSCoords.latitude}, ${currentGPSCoords.longitude}`}</h2>
         ) : (
           <p>Fetching your location</p>
         )}
@@ -108,7 +123,7 @@ function App() {
         {isLoading ? (
           <p>Please wait while we load weather data for your location</p>
         ) : null}
-        {isLoading ? null : <LocationSelect />}
+        <LocationSelect currentGPSCoords={currentGPSCoords} setSelectedLocCoords={setSelectedLocCoords} />
       </section>
       <section className="detailed-forecast">
         {createDetailedForecast()}

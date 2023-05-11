@@ -1,3 +1,8 @@
+export interface Coords {
+  latitude: string;
+  longitude: string;
+}
+
 export interface ForecastData {
   "@context": [
     string,
