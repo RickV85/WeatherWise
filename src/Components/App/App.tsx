@@ -117,11 +117,11 @@ function App() {
         {currentGPSCoords ? (
           <h2>{` Your current location: ${currentGPSCoords.latitude}, ${currentGPSCoords.longitude}`}</h2>
         ) : (
-          <p>Fetching your location</p>
+          <p className="loading-msg">Fetching your location</p>
         )}
         {error ? <p>{error}</p> : null}
         {isLoading ? (
-          <p>Please wait while we load weather data for your location</p>
+          <p className="loading-msg">Please wait while we load weather data for your location</p>
         ) : null}
         <LocationSelect currentGPSCoords={currentGPSCoords} setSelectedLocCoords={setSelectedLocCoords} />
       </section>
