@@ -26,10 +26,10 @@ function App() {
 
   const locationFetchFailure = () => {
     alert(
-      "There was an error using your current location. Please try again or enter zip."
+      "There was an error using your current location. Please try again."
     );
     setError(
-      "There was an error using your current location. Please try again or enter zip."
+      "There was an error using your current location. Please try again."
     );
     setTimeout(() => {
       setError("");
@@ -66,9 +66,7 @@ function App() {
   useEffect(() => {
     if (selectedLocCoords) {
       setIsLoading(true);
-      fetchWeatherSelectedLocation(
-        selectedLocCoords
-      )
+      fetchWeatherSelectedLocation(selectedLocCoords)
         .then((result) => {
           setForecastUrl(result.properties.forecast);
         })
@@ -79,7 +77,7 @@ function App() {
           alert("There was an error fetching weather");
         });
     }
-  }, [selectedLocCoords])
+  }, [selectedLocCoords]);
 
   useEffect(() => {
     if (forecastUrl) {
@@ -113,17 +111,23 @@ function App() {
   return (
     <main className="app-main">
       <h1>WeatherWise</h1>
+      <p>Best weather app of all time</p>
       <section className="header-section">
         {currentGPSCoords ? (
-          <h2>{` Your current location: ${currentGPSCoords.latitude}, ${currentGPSCoords.longitude}`}</h2>
+          <h2 className="current-loc-display">{` Your current location: ${currentGPSCoords.latitude}, ${currentGPSCoords.longitude}`}</h2>
         ) : (
           <p className="loading-msg">Fetching your location</p>
         )}
         {error ? <p>{error}</p> : null}
         {isLoading ? (
-          <p className="loading-msg">Please wait while we load weather data for your location</p>
+          <p className="loading-msg">
+            Please wait while we load weather data for your location
+          </p>
         ) : null}
-        <LocationSelect currentGPSCoords={currentGPSCoords} setSelectedLocCoords={setSelectedLocCoords} />
+        <LocationSelect
+          currentGPSCoords={currentGPSCoords}
+          setSelectedLocCoords={setSelectedLocCoords}
+        />
       </section>
       <section className="detailed-forecast">
         {createDetailedForecast()}

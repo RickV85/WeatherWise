@@ -1,5 +1,5 @@
 .app-main {
-  background-color: cornflowerblue;
+  background: linear-gradient(-65deg, #00ff33, #00d0ff);
   height: fit-content;
   min-height: 100vh;
   width: 100vw;
@@ -7,12 +7,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .header-section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 90vw;
+  text-align: center;
 }
 
 .detailed-forecast {
@@ -20,11 +23,13 @@
 }
 
 .detailed-day-forecast {
-  margin: 2%
+  margin: 2% 0% 2% 0%;
 }
 
 .loading-msg {
-  color: rgb(68, 255, 0);
+  color: rgb(255, 102, 0);
   font-size: 1.3rem;
   font-weight: 600;
+  width: 80vw;
+  text-align: center;
 }
