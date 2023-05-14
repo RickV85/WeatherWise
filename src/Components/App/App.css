@@ -18,6 +18,10 @@
   text-align: center;
 }
 
+.tagline {
+  color: #1600c0;
+}
+
 .detailed-forecast {
   width: 90vw
 }
@@ -27,9 +31,9 @@
 }
 
 .loading-msg {
-  color: rgb(255, 102, 0);
+  color: rgb(209 0 255);
   font-size: 1.3rem;
-  font-weight: 600;
+  font-weight: 500;
   width: 80vw;
   text-align: center;
 }

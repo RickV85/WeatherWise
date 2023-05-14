@@ -7,6 +7,7 @@ import {
 } from "../../Util/APICalls";
 import { Coords, ForecastData } from "../../Interfaces/AppInt";
 import LocationSelect from "../LocationSelect/LocationSelect";
+import DetailedDayForecast from "../DetailedDayForecast/DetailedDayForecast";
 
 function App() {
   const [currentGPSCoords, setCurrentGPSCoords] = useState<Coords>();
@@ -97,12 +98,9 @@ function App() {
   }, [forecastUrl]);
 
   const createDetailedForecast = () => {
-    const forecast = forecastData?.properties.periods.map((day, i) => {
+    const forecast = forecastData?.properties.periods.map((data, i) => {
       return (
-        <article key={i} className="detailed-day-forecast">
-          <h3>{day.name}</h3>
-          <p>{day.detailedForecast}</p>
-        </article>
+        <DetailedDayForecast data={data} key={i} />
       );
     });
     return forecast;
@@ -111,7 +109,7 @@ function App() {
   return (
     <main className="app-main">
       <h1>WeatherWise</h1>
-      <p>Best weather app of all time</p>
+      <p className="tagline">The best weather app of all time</p>
       <section className="header-section">
         {currentGPSCoords ? (
           <h2 className="current-loc-display">{` Your current location: ${currentGPSCoords.latitude}, ${currentGPSCoords.longitude}`}</h2>
