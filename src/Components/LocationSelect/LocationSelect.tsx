@@ -67,19 +67,17 @@ export default function LocationSelect({
             </option>
           </>
         );
-      default:
-        return <option>Select a type</option>;
     }
   };
 
   return (
     <div className="location-div">
-      <h3>Location type:</h3>
-
+      <h3>Location:</h3>
       <select
         className="location-select"
         onChange={(e) => setSelectedLocCoords(e.target.value)}
       >
+        <option value="" disabled selected hidden>Select location type</option>
         {createDisplayOptions()}
       </select>
     </div>
