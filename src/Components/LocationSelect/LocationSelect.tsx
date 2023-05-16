@@ -41,13 +41,34 @@ export default function LocationSelect({
             <option value={`39.74535727604811,-105.4051450280658`}>
               Upper CCC
             </option>
+          </>
+        );
+      case "Mountain Biking":
+        return (
+          <>
             <option value={`39.81203821942002,-105.50553715534731`}>
               Maryland Mountain
             </option>
           </>
         );
-        default:
-          return <option>Select a type</option>;
+      case "Snowboarding":
+        return (
+          <>
+            <option value={`40.157534026830845, -105.56773211156882`}>
+              Ski Road
+            </option>
+          </>
+        );
+      case "Other Favorites":
+        return (
+          <>
+            <option value={"40.017122873300956,-105.08883257979652"}>
+              Home
+            </option>
+          </>
+        );
+      default:
+        return <option>Select a type</option>;
     }
   };
 
