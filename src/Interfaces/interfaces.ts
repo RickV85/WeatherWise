@@ -60,3 +60,10 @@ export interface ForecastData {
   };
 }
 
+export interface LocationSelectProps {
+  setSelectedLocCoords: (arg1: string) => void;
+}
+
+export interface TypeSelectProps {
+  currentGPSCoords?: Coords;
+}

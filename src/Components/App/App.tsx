@@ -5,9 +5,10 @@ import {
   fetchWeatherSelectedLocation,
   fetchWeatherCurrentLocation,
 } from "../../Util/APICalls";
-import { Coords, ForecastData } from "../../Interfaces/AppInt";
+import { Coords, ForecastData } from "../../Interfaces/interfaces";
 import LocationSelect from "../LocationSelect/LocationSelect";
 import DetailedDayForecast from "../DetailedDayForecast/DetailedDayForecast";
+import TypeSelect from "../TypeSelect/TypeSelect";
 
 function App() {
   const [currentGPSCoords, setCurrentGPSCoords] = useState<Coords>();
@@ -123,10 +124,10 @@ function App() {
           </p>
         ) : null}
         <LocationSelect
-          currentGPSCoords={currentGPSCoords}
           setSelectedLocCoords={setSelectedLocCoords}
         />
       </section>
+      <TypeSelect currentGPSCoords={currentGPSCoords} />
       <section className="detailed-forecast">
         {createDetailedForecast()}
       </section>
