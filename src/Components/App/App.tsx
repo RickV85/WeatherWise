@@ -12,7 +12,8 @@ import TypeSelect from "../TypeSelect/TypeSelect";
 
 function App() {
   const [currentGPSCoords, setCurrentGPSCoords] = useState<Coords>();
-  const [selectedLocCoords, setSelectedLocCoords] = useState<string>();
+  const [selectedLocCoords, setSelectedLocCoords] = useState("");
+  const [selectedLocType, setSelectedLocType] = useState("");
   const [forecastUrl, setForecastUrl] = useState("");
   const [forecastData, setForecastData] = useState<ForecastData>();
   const [error, setError] = useState("");
@@ -27,9 +28,6 @@ function App() {
   };
 
   const locationFetchFailure = () => {
-    alert(
-      "There was an error using your current location. Please try again."
-    );
     setError(
       "There was an error using your current location. Please try again."
     );
@@ -60,7 +58,6 @@ function App() {
           console.error(error);
           setError(error);
           setIsLoading(false);
-          alert("There was an error fetching weather");
         });
     }
   }, [currentGPSCoords]);
@@ -76,7 +73,6 @@ function App() {
           console.error(error);
           setError(error);
           setIsLoading(false);
-          alert("There was an error fetching weather");
         });
     }
   }, [selectedLocCoords]);
@@ -93,16 +89,13 @@ function App() {
           console.error(error);
           setError(error);
           setIsLoading(false);
-          alert("There was an error fetching forecast");
         });
     }
   }, [forecastUrl]);
 
   const createDetailedForecast = () => {
     const forecast = forecastData?.properties.periods.map((data, i) => {
-      return (
-        <DetailedDayForecast data={data} key={i} />
-      );
+      return <DetailedDayForecast data={data} key={i} />;
     });
     return forecast;
   };
@@ -123,11 +116,12 @@ function App() {
             Please wait while we load weather data for your location
           </p>
         ) : null}
-        <LocationSelect
-          setSelectedLocCoords={setSelectedLocCoords}
+        <TypeSelect
+          currentGPSCoords={currentGPSCoords}
+          setSelectedLocType={setSelectedLocType}
         />
+        <LocationSelect setSelectedLocCoords={setSelectedLocCoords} />
       </section>
-      <TypeSelect currentGPSCoords={currentGPSCoords} />
       <section className="detailed-forecast">
         {createDetailedForecast()}
       </section>
