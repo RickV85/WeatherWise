@@ -120,7 +120,7 @@ function App() {
           currentGPSCoords={currentGPSCoords}
           setSelectedLocType={setSelectedLocType}
         />
-        <LocationSelect setSelectedLocCoords={setSelectedLocCoords} />
+        <LocationSelect selectedLocType={selectedLocType} setSelectedLocCoords={setSelectedLocCoords} />
       </section>
       <section className="detailed-forecast">
         {createDetailedForecast()}

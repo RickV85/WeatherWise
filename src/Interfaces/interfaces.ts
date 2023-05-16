@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface Coords {
   latitude: string;
   longitude: string;
@@ -61,10 +63,11 @@ export interface ForecastData {
 }
 
 export interface LocationSelectProps {
-  setSelectedLocCoords: (coords: string) => void;
+  setSelectedLocCoords: Dispatch<SetStateAction<string>>;
+  selectedLocType: string;
 }
 
 export interface TypeSelectProps {
   currentGPSCoords?: Coords;
-  setSelectedLocType: (location: string) => void;
+  setSelectedLocType: Dispatch<SetStateAction<string>>;
 }
