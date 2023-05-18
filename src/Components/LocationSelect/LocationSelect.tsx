@@ -13,7 +13,7 @@ export default function LocationSelect({
   }, [selectedLocType]);
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelection(e.target.selectedOptions[0].innerText);
+    setSelection(e.target.value);
     setSelectedLocCoords(e.target.value);
   };
 
