@@ -3,7 +3,6 @@ import "./App.css";
 import {
   fetchForecast,
   fetchWeatherSelectedLocation,
-  fetchWeatherCurrentLocation,
 } from "../../Util/APICalls";
 import {
   Coords,
