@@ -20,10 +20,11 @@
 
 .tagline {
   color: #1600c0;
+  margin-bottom: 1vh;
 }
 
 .current-loc-display {
-  margin-bottom: 1vh;
+  margin-top: 1vh;
 }
 
 .detailed-forecast {

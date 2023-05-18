@@ -5,7 +5,11 @@ import {
   fetchWeatherSelectedLocation,
   fetchWeatherCurrentLocation,
 } from "../../Util/APICalls";
-import { Coords, ForecastData } from "../../Interfaces/interfaces";
+import {
+  Coords,
+  ForecastData,
+  LocationDetails,
+} from "../../Interfaces/interfaces";
 import LocationSelect from "../LocationSelect/LocationSelect";
 import DetailedDayForecast from "../DetailedDayForecast/DetailedDayForecast";
 import TypeSelect from "../TypeSelect/TypeSelect";
@@ -14,6 +18,7 @@ function App() {
   const [currentGPSCoords, setCurrentGPSCoords] = useState<Coords>();
   const [selectedLocCoords, setSelectedLocCoords] = useState("");
   const [selectedLocType, setSelectedLocType] = useState("");
+  const [locationDetails, setLocationDetails] = useState<LocationDetails>();
   const [forecastUrl, setForecastUrl] = useState("");
   const [forecastData, setForecastData] = useState<ForecastData>();
   const [error, setError] = useState("");
@@ -29,7 +34,7 @@ function App() {
 
   const locationFetchFailure = () => {
     setError(
-      "There was an error using your current location. Please try again."
+      "There was an error using your current location. Please allow this site to access your location or reload the page to try again."
     );
     setTimeout(() => {
       setError("");
@@ -52,7 +57,9 @@ function App() {
         currentGPSCoords.longitude
       )
         .then((result) => {
+          setLocationDetails(result);
           setForecastUrl(result.properties.forecast);
+          console.log(result);
         })
         .catch((error) => {
           console.error(error);
@@ -67,7 +74,9 @@ function App() {
       setIsLoading(true);
       fetchWeatherSelectedLocation(selectedLocCoords)
         .then((result) => {
+          setLocationDetails(result);
           setForecastUrl(result.properties.forecast);
+          console.log(result);
         })
         .catch((error) => {
           console.error(error);
@@ -105,22 +114,26 @@ function App() {
       <h1>WeatherWise</h1>
       <p className="tagline">The best weather app of all time</p>
       <section className="header-section">
-        {currentGPSCoords ? (
-          <h2 className="current-loc-display">{` Your current location: ${currentGPSCoords.latitude}, ${currentGPSCoords.longitude}`}</h2>
-        ) : (
-          <p className="loading-msg">Fetching your location</p>
-        )}
+        <TypeSelect
+          currentGPSCoords={currentGPSCoords}
+          setSelectedLocType={setSelectedLocType}
+        />
+        <LocationSelect
+          selectedLocType={selectedLocType}
+          setSelectedLocCoords={setSelectedLocCoords}
+        />
         {error ? <p>{error}</p> : null}
         {isLoading ? (
           <p className="loading-msg">
             Please wait while we load weather data for your location
           </p>
         ) : null}
-        <TypeSelect
-          currentGPSCoords={currentGPSCoords}
-          setSelectedLocType={setSelectedLocType}
-        />
-        <LocationSelect selectedLocType={selectedLocType} setSelectedLocCoords={setSelectedLocCoords} />
+        {locationDetails ? (
+          <h2 className="current-loc-display">{`Forecast for: ${locationDetails.properties.relativeLocation.geometry.coordinates[0]}, ${locationDetails.properties.relativeLocation.geometry.coordinates[1]}
+          near ${locationDetails.properties.relativeLocation.properties.city}, ${locationDetails.properties.relativeLocation.properties.state}`}</h2>
+        ) : (
+          <p className="loading-msg">Fetching your location</p>
+        )}
       </section>
       <section className="detailed-forecast">
         {createDetailedForecast()}

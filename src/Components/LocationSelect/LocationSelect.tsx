@@ -1,17 +1,30 @@
 import { LocationSelectProps } from "../../Interfaces/interfaces";
 import "./LocationSelect.css";
+import { useState, useEffect } from "react";
 
 export default function LocationSelect({
   setSelectedLocCoords,
   selectedLocType,
 }: LocationSelectProps) {
+  const [selection, setSelection] = useState("");
+
+  useEffect(() => {
+    setSelection("");
+  }, [selectedLocType]);
+
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelection(e.target.selectedOptions[0].innerText);
+    setSelectedLocCoords(e.target.value);
+  };
+
   {
     /* ADD THESE TO A DATA FILE AND MAP THEM TO CREATE */
   }
   const createDisplayOptions = () => {
+    let options;
     switch (selectedLocType) {
       case "Climbing":
-        return (
+        options = (
           <>
             <option value={`40.00448179512719,-105.35580040554191`}>
               Lower BoCan
@@ -43,43 +56,56 @@ export default function LocationSelect({
             </option>
           </>
         );
+        break;
       case "Mountain Biking":
-        return (
+        options = (
           <>
             <option value={`39.81203821942002,-105.50553715534731`}>
               Maryland Mountain
             </option>
           </>
         );
+        break;
       case "Snowboarding":
-        return (
+        options = (
           <>
             <option value={`40.157534026830845, -105.56773211156882`}>
               Ski Road
             </option>
           </>
         );
+        break;
       case "Other Favorites":
-        return (
+        options = (
           <>
             <option value={"40.017122873300956,-105.08883257979652"}>
               Home
             </option>
           </>
         );
+        break;
     }
+
+    return options;
   };
 
-  return (
-    <div className="location-div">
-      <h3>Location:</h3>
-      <select
-        className="location-select"
-        onChange={(e) => setSelectedLocCoords(e.target.value)}
-      >
-        <option value="" disabled selected hidden>Select location type</option>
-        {createDisplayOptions()}
-      </select>
-    </div>
-  );
+  if (selectedLocType) {
+    return (
+      <div className="location-div">
+        <h3>Location:</h3>
+        <select
+          className="location-select"
+          value={selection}
+          onChange={(e) => handleSelect(e)}
+        >
+          <option value="" disabled>
+            Select location type
+          </option>
+          {createDisplayOptions()}
+        </select>
+      </div>
+    );
+  } else {
+    return null;
+  }
 }
