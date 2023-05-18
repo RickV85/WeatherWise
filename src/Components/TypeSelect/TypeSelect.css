@@ -1,0 +1,11 @@
+.type-select {
+  padding: 5px;
+  margin: 0vh 0vw 0vh 1vw;
+  border-radius: 3px;
+}
+
+.type-select-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1vh;
+}

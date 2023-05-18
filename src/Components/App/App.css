@@ -20,10 +20,15 @@
 
 .tagline {
   color: #1600c0;
+  margin-bottom: 1vh;
+}
+
+.current-loc-display {
+  margin-top: 1vh;
 }
 
 .detailed-forecast {
-  width: 90vw
+  width: 90vw;
 }
 
 .detailed-day-forecast {
@@ -36,4 +41,22 @@
   font-weight: 500;
   width: 80vw;
   text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    font-size: 0.8rem;
+  }
+
+  select {
+    font-size: 0.8rem !important;
+  }
 }
