@@ -69,7 +69,7 @@ export default function LocationSelect({
       case "Snowboarding":
         options = (
           <>
-            <option value={`40.157534026830845, -105.56773211156882`}>
+            <option value={`40.157534026830845,-105.56773211156882`}>
               Ski Road
             </option>
           </>
@@ -89,7 +89,7 @@ export default function LocationSelect({
     return options;
   };
 
-  if (selectedLocType) {
+  if (selectedLocType !== "Current Location") {
     return (
       <div className="location-div">
         <h3>Location:</h3>

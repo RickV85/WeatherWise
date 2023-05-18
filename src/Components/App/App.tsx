@@ -17,7 +17,7 @@ import TypeSelect from "../TypeSelect/TypeSelect";
 function App() {
   const [currentGPSCoords, setCurrentGPSCoords] = useState<Coords>();
   const [selectedLocCoords, setSelectedLocCoords] = useState("");
-  const [selectedLocType, setSelectedLocType] = useState("");
+  const [selectedLocType, setSelectedLocType] = useState("Current Location");
   const [locationDetails, setLocationDetails] = useState<LocationDetails>();
   const [forecastUrl, setForecastUrl] = useState("");
   const [forecastData, setForecastData] = useState<ForecastData>();
@@ -49,25 +49,22 @@ function App() {
     );
   }, []);
 
+  // useEffect(() => {
+  //   if (currentGPSCoords) {
+  //     setIsLoading(true);
+  //     setSelectedLocCoords(
+  //       `${currentGPSCoords.latitude},${currentGPSCoords.longitude}`
+  //     )
+  //   }
+  // }, [currentGPSCoords]);
+
   useEffect(() => {
-    if (currentGPSCoords) {
-      setIsLoading(true);
-      fetchWeatherCurrentLocation(
-        currentGPSCoords.latitude,
-        currentGPSCoords.longitude
+    if (selectedLocType === "Current Location" && currentGPSCoords) {
+      setSelectedLocCoords(
+        `${currentGPSCoords.latitude},${currentGPSCoords.longitude}`
       )
-        .then((result) => {
-          setLocationDetails(result);
-          setForecastUrl(result.properties.forecast);
-          console.log(result);
-        })
-        .catch((error) => {
-          console.error(error);
-          setError(error);
-          setIsLoading(false);
-        });
     }
-  }, [currentGPSCoords]);
+  }, [selectedLocType, currentGPSCoords])
 
   useEffect(() => {
     if (selectedLocCoords) {
@@ -115,7 +112,6 @@ function App() {
       <p className="tagline">The best weather app of all time</p>
       <section className="header-section">
         <TypeSelect
-          currentGPSCoords={currentGPSCoords}
           setSelectedLocType={setSelectedLocType}
         />
         <LocationSelect
