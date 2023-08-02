@@ -112,7 +112,7 @@ function App() {
       {/* Conditional loading if error */}
       {error ? (
         <>
-          <p>{`An error occoured while fetching your forecast. Please reload the page and try your request again.
+          <p>{`An error occurred while fetching your forecast. Please reload the page and try your request again.
            Error: ${error}`}</p>
           <button onClick={() => window.location.reload()}>Reload page</button>
         </>
