@@ -61,9 +61,9 @@ function App() {
     if (selectedLocType === "Current Location" && currentGPSCoords) {
       setSelectedLocCoords(
         `${currentGPSCoords.latitude},${currentGPSCoords.longitude}`
-      )
+      );
     }
-  }, [selectedLocType, currentGPSCoords])
+  }, [selectedLocType, currentGPSCoords]);
 
   useEffect(() => {
     if (selectedLocCoords) {
@@ -109,30 +109,34 @@ function App() {
     <main className="app-main">
       <h1>WeatherWise</h1>
       <p className="tagline">The best weather app of all time</p>
-      <section className="header-section">
-        <TypeSelect
-          setSelectedLocType={setSelectedLocType}
-        />
-        <LocationSelect
-          selectedLocType={selectedLocType}
-          setSelectedLocCoords={setSelectedLocCoords}
-        />
-        {error ? <p>{error}</p> : null}
-        {isLoading ? (
-          <p className="loading-msg">
-            Please wait while we load weather data for your location
-          </p>
-        ) : null}
-        {locationDetails ? (
-          <h2 className="current-loc-display">{`Forecast for: ${locationDetails.properties.relativeLocation.geometry.coordinates[0]}, ${locationDetails.properties.relativeLocation.geometry.coordinates[1]}
+      {/* Conditional loading if error */}
+      {error ? (
+        <p>{error}</p>
+      ) : (
+        <>
+          <section className="header-section">
+            <TypeSelect setSelectedLocType={setSelectedLocType} />
+            <LocationSelect
+              selectedLocType={selectedLocType}
+              setSelectedLocCoords={setSelectedLocCoords}
+            />
+            {isLoading ? (
+              <p className="loading-msg">
+                Please wait while we load weather data for your location
+              </p>
+            ) : null}
+            {locationDetails ? (
+              <h2 className="current-loc-display">{`Forecast for: ${locationDetails.properties.relativeLocation.geometry.coordinates[0]}, ${locationDetails.properties.relativeLocation.geometry.coordinates[1]}
           near ${locationDetails.properties.relativeLocation.properties.city}, ${locationDetails.properties.relativeLocation.properties.state}`}</h2>
-        ) : (
-          <p className="loading-msg">Fetching your location</p>
-        )}
-      </section>
-      <section className="detailed-forecast">
-        {createDetailedForecast()}
-      </section>
+            ) : (
+              <p className="loading-msg">Fetching your location</p>
+            )}
+          </section>
+          <section className="detailed-forecast">
+            {createDetailedForecast()}
+          </section>
+        </>
+      )}
     </main>
   );
 }
