@@ -111,7 +111,11 @@ function App() {
       <p className="tagline">The best weather app of all time</p>
       {/* Conditional loading if error */}
       {error ? (
-        <p>{error}</p>
+        <>
+          <p>{`An error occoured while fetching your forecast. Please reload the page and try your request again.
+           Error: ${error}`}</p>
+          <button onClick={() => window.location.reload()}>Reload page</button>
+        </>
       ) : (
         <>
           <section className="header-section">
