@@ -74,9 +74,9 @@ function App() {
           setForecastUrl(result.properties.forecast);
           console.log(result);
         })
-        .catch((error) => {
-          console.error(error);
-          setError(error);
+        .catch((err) => {
+          console.error(err);
+          setError(err);
           setIsLoading(false);
         });
     }
@@ -90,9 +90,9 @@ function App() {
           setForecastData(result);
           setIsLoading(false);
         })
-        .catch((error) => {
-          console.error(error);
-          setError(error);
+        .catch((err) => {
+          console.error(err);
+          setError(err);
           setIsLoading(false);
         });
     }
