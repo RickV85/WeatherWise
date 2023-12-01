@@ -10,11 +10,19 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.main-content {
+  max-width: 1600px;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+   align-items: center;
+}
+
 .header-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90vw;
+  width: 90%;
   text-align: center;
 }
 
@@ -28,7 +36,7 @@
 }
 
 .detailed-forecast {
-  width: 90vw;
+  width: 90%;
 }
 
 .detailed-day-forecast {

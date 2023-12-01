@@ -24,7 +24,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const locationFetchSuccess = (position: GeolocationPosition) => {
-    console.log(position);
     setCurrentGPSCoords({
       latitude: `${position.coords.latitude}`,
       longitude: `${position.coords.longitude}`,
@@ -47,15 +46,6 @@ function App() {
       locationFetchFailure
     );
   }, []);
-
-  // useEffect(() => {
-  //   if (currentGPSCoords) {
-  //     setIsLoading(true);
-  //     setSelectedLocCoords(
-  //       `${currentGPSCoords.latitude},${currentGPSCoords.longitude}`
-  //     )
-  //   }
-  // }, [currentGPSCoords]);
 
   useEffect(() => {
     if (selectedLocType === "Current Location" && currentGPSCoords) {
@@ -84,6 +74,7 @@ function App() {
 
   useEffect(() => {
     if (forecastUrl) {
+      console.log(forecastUrl);
       setIsLoading(true);
       fetchForecast(forecastUrl)
         .then((result) => {
@@ -107,40 +98,44 @@ function App() {
 
   return (
     <main className="app-main">
-      <h1>WeatherWise</h1>
-      <p className="tagline">The best weather app of all time</p>
-      {/* Conditional loading if error */}
-      {error ? (
-        <>
-          <p>{`An error occurred while fetching your forecast. Please reload the page and try your request again.
+      <div className="main-content">
+        <h1>WeatherWise</h1>
+        <p className="tagline">The best weather app of all time</p>
+        {/* Conditional loading if error */}
+        {error ? (
+          <>
+            <p>{`An error occurred while fetching your forecast. Please reload the page and try your request again.
            Error: ${error}`}</p>
-          <button onClick={() => window.location.reload()}>Reload page</button>
-        </>
-      ) : (
-        <>
-          <section className="header-section">
-            <TypeSelect setSelectedLocType={setSelectedLocType} />
-            <LocationSelect
-              selectedLocType={selectedLocType}
-              setSelectedLocCoords={setSelectedLocCoords}
-            />
-            {isLoading ? (
-              <p className="loading-msg">
-                Please wait while we load weather data for your location
-              </p>
-            ) : null}
-            {locationDetails ? (
-              <h2 className="current-loc-display">{`Forecast for: ${locationDetails.properties.relativeLocation.geometry.coordinates[0]}, ${locationDetails.properties.relativeLocation.geometry.coordinates[1]}
+            <button onClick={() => window.location.reload()}>
+              Reload page
+            </button>
+          </>
+        ) : (
+          <>
+            <section className="header-section">
+              <TypeSelect setSelectedLocType={setSelectedLocType} />
+              <LocationSelect
+                selectedLocType={selectedLocType}
+                setSelectedLocCoords={setSelectedLocCoords}
+              />
+              {isLoading ? (
+                <p className="loading-msg">
+                  Please wait while we load weather data for your location
+                </p>
+              ) : null}
+              {locationDetails ? (
+                <h2 className="current-loc-display">{`Forecast for: ${locationDetails.properties.relativeLocation.geometry.coordinates[0]}, ${locationDetails.properties.relativeLocation.geometry.coordinates[1]}
           near ${locationDetails.properties.relativeLocation.properties.city}, ${locationDetails.properties.relativeLocation.properties.state}`}</h2>
-            ) : (
-              <p className="loading-msg">Fetching your location</p>
-            )}
-          </section>
-          <section className="detailed-forecast">
-            {createDetailedForecast()}
-          </section>
-        </>
-      )}
+              ) : (
+                <p className="loading-msg">Fetching your location</p>
+              )}
+            </section>
+            <section className="detailed-forecast">
+              {createDetailedForecast()}
+            </section>
+          </>
+        )}
+      </div>
     </main>
   );
 }
