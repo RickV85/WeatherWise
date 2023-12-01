@@ -1,5 +1,4 @@
 import { TypeSelectProps } from "../../Interfaces/interfaces";
-import "./TypeSelect.css";
 
 const TypeSelect: React.FC<TypeSelectProps> = ({
   setSelectedLocType,

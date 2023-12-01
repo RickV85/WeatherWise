@@ -1,4 +1,3 @@
-import "./DetailedDayForecast.css";
 
 interface Props {
   data: {

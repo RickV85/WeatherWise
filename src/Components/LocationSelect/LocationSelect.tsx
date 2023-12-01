@@ -1,5 +1,4 @@
 import { LocationSelectProps } from "../../Interfaces/interfaces";
-import "./LocationSelect.css";
 import { useState, useEffect } from "react";
 
 export default function LocationSelect({

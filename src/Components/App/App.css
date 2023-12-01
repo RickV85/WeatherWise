@@ -31,6 +31,29 @@
   margin-bottom: 1vh;
 }
 
+.location-div {
+  display: flex;
+  align-items: center;
+}
+
+.location-select {
+  padding: 5px;
+  border-radius: 3px;
+  margin-left: 1vw;
+}
+
+.type-select {
+  padding: 5px;
+  margin: 0vh 0vw 0vh 1vw;
+  border-radius: 3px;
+}
+
+.type-select-div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1vh;
+}
+
 .current-loc-display {
   margin-top: 1vh;
 }
